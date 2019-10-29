@@ -32,12 +32,9 @@
           outer: null
         },
         slides: [
-          'https://format-com-cld-res.cloudinary.com/image/private/s--hnC5O30p--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/6c90bfeb28b4de38bf65c8337349644d/lf1_10.jpg',
-          'https://format-com-cld-res.cloudinary.com/image/private/s--6CLoMypk--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/421a0ec99340f1a88979465153cac107/lf1_11.jpg',
-          'https://format-com-cld-res.cloudinary.com/image/private/s--1OwozA6C--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/5f1e518d5c1d5ac63adb915646f897ea/lf1_12.jpg',
-          'https://format-com-cld-res.cloudinary.com/image/private/s--DVp80dL4--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/799c17921ec5e1b44fffb7b12e58848f/lf1_7.jpg',
-          'https://format-com-cld-res.cloudinary.com/image/private/s--MF0_QlLL--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/e7d058ee0c20d763e805731f8e853e62/lf1_4.jpg',
-          'https://format-com-cld-res.cloudinary.com/image/private/s--G8_tWfiP--/c_limit,g_center,h_1200,w_65535/a_auto,fl_keep_iptc.progressive,q_95/v1/888334384f1be77bda331e69ac0e59a2/lf1_1.jpg'
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750',
+          'https://images.unsplash.com/photo-1513584684374-8bab748fbf90',
+          'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg'
         ],
         slideInView: 2
       }
@@ -109,7 +106,7 @@
 </script>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
+  @import "../assets/css/layout/_grid";
 
   #bg-canvas {
     position: absolute;
