@@ -1,0 +1,104 @@
+@import './fonts';
+
+body {
+  color: #ffffff;
+  font-size: 14px;
+  font-family: 'Sofia Pro', sans-serif;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 9.375vw;
+  font-weight: 600;
+  line-height: .9;
+
+  @media (min-width: 640px) {
+    font-size: 4.86111vw
+  }
+
+  @media (min-width: 991px) {
+    font-size: 4.16667vw;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 4.16667vw
+  }
+
+  @media (min-width: 1600px) {
+    font-size: 3.47222vw
+  }
+
+  @media (min-width: 1920px) {
+    font-size: 3.125vw
+  }
+}
+
+h2 {
+  font-size: 7.03125vw;
+  font-weight: 600;
+  line-height: 1.1;
+
+  @media (min-width: 991px) {
+    font-size: 3.125vw
+  }
+}
+
+h3 {
+  font-size: 5.46875vw;
+  font-weight: 600;
+  line-height: 1.25;
+
+  @media (min-width: 640px) {
+    font-size: 3.90625vw
+  }
+
+  @media (min-width: 991px) {
+    font-size: 2.43056vw
+  }
+}
+
+h4 {
+  font-size: 5.46875vw;
+  font-weight: 600;
+  line-height: 1.5;
+
+  @media (min-width: 640px) {
+    font-size: 2.34375vw
+  }
+
+  @media (min-width: 991px) {
+    font-size: 1.73611vw
+  }
+}
+
+h5 {
+  font-size: 3.90625vw;
+  font-weight: 600;
+  line-height: 1.5;
+
+  @media (min-width: 640px) {
+    font-size: 2.34375vw
+  }
+
+  @media (min-width: 991px) {
+    font-size: 1.25vw
+  }
+}
+
+// Weights
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}

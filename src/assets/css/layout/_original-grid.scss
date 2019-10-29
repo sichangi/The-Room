@@ -1,0 +1,32 @@
+.row-grid {
+  display: grid;
+  grid-template-rows: [first-row] 1fr [second-row] 6fr [last-row] 1fr;
+  height: 100%;
+
+  &.inner {
+    grid-template-rows: [i-first-row] 1fr [i-second-row] 4fr [i-last-row] 1fr;
+  }
+}
+
+.column-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: [col1] 1fr [col1-end col2] 1fr [col2-end col3] 4fr [col3-end col4] 4fr [col4-end col5] 1fr [col5-end col6] 1fr;
+  border-bottom: var(--border);
+  height: 100%;
+
+  &.second-chunk {
+    grid-template-columns: [col1] 1fr [col2] 10fr [col3] 1fr;
+  }
+
+  &.inner {
+    grid-template-columns: [i-col1] 1fr [i-col1-end i-col2] 4fr [i-col2-end i-col3] 4fr [i-col3-end i-col4] 1fr [i-col4-end];
+  }
+
+  .col {
+    border-right: var(--border);
+    justify-self: stretch;
+    align-self: stretch;
+  }
+}
+

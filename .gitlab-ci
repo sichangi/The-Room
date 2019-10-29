@@ -1,0 +1,35 @@
+image: node:10.17.0
+
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
+stages:
+  - build
+  - deploy
+
+Build:
+  stage: build
+  artifacts:
+    paths:
+      - dist/
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn install
+  script:
+    - yarn build
+
+Deploy:
+  stage: deploy
+  cache: {}
+  environment:
+    name: production
+    url: https://room.cole.la
+  dependencies:
+    - Build
+  before_script:
+    - yarn global add firebase-tools
+  script:
+    - firebase use --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting --public dist --non-interactive --project the-room-0 --token $FIREBASE_TOKEN
