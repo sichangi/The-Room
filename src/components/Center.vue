@@ -30,7 +30,7 @@
 
 <script>
   export default {
-    name: 'show'
+    name: 'Center'
   }
 </script>
 

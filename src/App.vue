@@ -69,6 +69,7 @@
       height: 100%;
       overflow: visible;
       display: grid;
+      pointer-events: none;
       background-color: rgba(0, 0, 0, 0.1);
       grid-template-columns: $five-column-grid;
       grid-template-rows: $three-row-grid;

@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: 'TopNav'
+    name: 'Top'
   }
 </script>
 
@@ -53,7 +53,7 @@
       .logo {
         display: flex;
         align-items: flex-end;
-        font-weight: 800;
+        font-weight: 700;
         font-size: 4.8vw;
         line-height: 0;
 
@@ -94,7 +94,7 @@
         cursor: pointer;
         font-weight: 500;
         text-transform: uppercase;
-        font-size: 2.8vw;
+        font-size: 2.5vw;
         letter-spacing: .4px;
 
         @media(min-width: 760px) {

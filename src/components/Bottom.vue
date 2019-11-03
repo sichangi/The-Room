@@ -21,7 +21,7 @@
 
 <script>
   export default {
-    name: "Foot"
+    name: "Bottom"
   }
 </script>
 

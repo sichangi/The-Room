@@ -32,9 +32,11 @@
           outer: null
         },
         slides: [
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750',
-          'https://images.unsplash.com/photo-1513584684374-8bab748fbf90',
-          'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg'
+          'https://images.adsttc.com/media/images/5011/e21e/28ba/0d5f/4c00/01a1/slideshow/stringio.jpg?1414280234',
+          'https://images.adsttc.com/media/images/5011/e20e/28ba/0d5f/4c00/019c/slideshow/stringio.jpg?1414280247',
+          'https://images.adsttc.com/media/images/5011/e230/28ba/0d5f/4c00/01a7/slideshow/stringio.jpg?1414280265',
+          'https://images.adsttc.com/media/images/5011/e227/28ba/0d5f/4c00/01a4/slideshow/stringio.jpg?1414280242',
+          'https://images.adsttc.com/media/images/5011/e232/28ba/0d5f/4c00/01a8/slideshow/stringio.jpg?1414280267'
         ],
         slideInView: 2
       }
