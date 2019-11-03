@@ -62,6 +62,7 @@
     height: 100vh;
     z-index: 2;
     overflow: hidden;
+    pointer-events: none;
   }
 
   .row-grid {

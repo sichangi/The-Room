@@ -1,7 +1,7 @@
 <template>
   <div id="core" ref="core">
     <background></background>
-    <!--<grid></grid>-->
+    <grid></grid>
   </div>
 </template>
 
