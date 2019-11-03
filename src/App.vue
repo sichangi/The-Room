@@ -1,63 +1,37 @@
 <template>
-  <div id="core" ref="core">
+  <main ref="core">
     <background></background>
     <grid></grid>
-  </div>
+    <div id="c">
+      <top></top>
+      <center></center>
+      <bottom></bottom>
+    </div>
+  </main>
 </template>
 
 <script>
-  // import VirtualScroll from 'virtual-scroll'
-  import Grid from "./Grid";
-  import Background from "@/components/Background";
+  import Grid from './Grid'
+  import Top from './components/Top'
+  import Bottom from './components/Bottom'
+  import Center from './components/Center'
+  import Background from './components/Background'
 
   export default {
     name: 'App',
-    components: {Background, Grid},
-    mounted() {
-      document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-      })
-
-      // const section = this.$refs.core
-
-      // let currentY = 0, ease = 0.1, targetY = 0;
-
-      // const run = function () {
-      //   requestAnimationFrame(run);
-      //   currentY += (targetY - currentY) * ease;
-      //   var t = 'translateY(' + currentY + 'px) translateZ(0)';
-      //   var s = section.style;
-      //   s["transform"] = t;
-      //   s["webkitTransform"] = t;
-      //   s["mozTransform"] = t;
-      //   s["msTransform"] = t;
-      // }
-
-      // run();
-      // const vs = new VirtualScroll({
-      //   el: section
-      // })
-
-      // vs.on((e) => {
-        // targetY += e.deltaY;
-        // console.log(e)
-        // targetY = Math.max((window.scrollY - window.innerHeight) * -1, targetY);
-        // targetY = Math.min(0, targetY);
-      // })
-    }
+    components: {Center, Bottom, Top, Background, Grid}
   }
 </script>
 
 <style lang="scss" src="./assets/css/main.scss"></style>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
+  @import "./assets/css/layout/_grid";
 
-  #core {
+  main {
     position: relative;
     top: 0;
     bottom: 0;
-    padding-top: 100vh;
     left: 0;
     right: 0;
     min-height: 100vh;
@@ -86,16 +60,18 @@
       min-width: 0;
     }
 
-    main {
-      position: relative;
+    #c {
+      position: fixed;
+      top: 0;
+      left: 0;
       z-index: 3;
+      width: 100%;
+      height: 100%;
       overflow: visible;
-      grid-row-start: row2;
-      grid-column-start: col2;
-      grid-column-end: col5-end;
       display: grid;
-      grid-template-columns: $three-column-inner-grid;
-      grid-template-rows: $three-row-inner-grid;
+      background-color: rgba(0, 0, 0, 0.1);
+      grid-template-columns: $five-column-grid;
+      grid-template-rows: $three-row-grid;
     }
   }
 </style>

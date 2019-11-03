@@ -26,7 +26,7 @@
 </script>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
+  @import "../assets/css/layout/_grid";
 
   footer {
     grid-row-start: row3;

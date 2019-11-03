@@ -22,3 +22,39 @@ $three-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 8fr [i-col2-end i-col
 .justify-between {
   justify-content: space-between;
 }
+
+.row-grid {
+  display: grid;
+  grid-template-rows: $three-row-grid;
+  height: 100%;
+
+  &.inner {
+    grid-template-rows: $three-row-inner-grid;
+  }
+}
+
+.column-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: $five-column-grid;
+  border-bottom: var(--border);
+  height: 100%;
+
+  &.second-chunk {
+    grid-template-columns: $three-column-grid;
+
+    @media (max-width: 760px) {
+      grid-template-columns: unset;
+    }
+  }
+
+  &.inner {
+    grid-template-columns: $four-column-inner-grid;
+  }
+
+  .col {
+    border-right: var(--border);
+    justify-self: stretch;
+    align-self: stretch;
+  }
+}

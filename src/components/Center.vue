@@ -1,5 +1,5 @@
 <template>
-  <div id="show">
+  <article>
     <div class="title-wrapper">
       <div class="container">
         <h1 class="title">Show</h1>
@@ -7,25 +7,26 @@
       </div>
     </div>
     <div class="details-wrapper">
-      <div class="container"></div>
+      <div class="container">
+
+      </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>
   export default {
-    name: "Content"
+    name: "show"
   }
 </script>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
+  @import "../assets/css/layout/_grid";
 
-  #show {
-    grid-column-start: i-col1;
-    grid-row-start: i-row2;
-    grid-column-end: span 3;
-    background-color: rgba(255, 255, 255, 0.2);
+  article {
+    grid-column-start: col2;
+    grid-row-start: row2;
+    grid-column-end: span 4;
 
     display: grid;
     grid-template-columns: $four-column-inner-grid;

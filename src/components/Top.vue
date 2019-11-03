@@ -1,5 +1,5 @@
 <template>
-  <div id="top-nav">
+  <header>
     <div class="wrapper">
       <nav class="left-nav">
         <div class="nav-items">
@@ -16,21 +16,21 @@
         </div>
       </nav>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
   export default {
-    name: "TopNav"
+    name: 'TopNav'
   }
 </script>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
+  @import "../assets/css/layout/_grid";
 
   $nav-margin-size: 1.4em;
 
-  #top-nav {
+  header {
     position: relative;
     z-index: 4;
     grid-column-start: col1;
@@ -53,7 +53,7 @@
       .logo {
         display: flex;
         align-items: flex-end;
-        font-weight: 600;
+        font-weight: 800;
         font-size: 4.8vw;
         line-height: 0;
 
@@ -97,7 +97,7 @@
         font-size: 2.8vw;
         letter-spacing: .4px;
 
-        @media(min-width: 760px){
+        @media(min-width: 760px) {
           font-size: .8vw;
         }
       }

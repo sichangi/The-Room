@@ -51,8 +51,6 @@
 </script>
 
 <style lang="scss">
-  @import "~@/assets/css/layout/_grid";
-
   #grid {
     position: absolute;
     top: 0;
@@ -63,41 +61,5 @@
     z-index: 2;
     overflow: hidden;
     pointer-events: none;
-  }
-
-  .row-grid {
-    display: grid;
-    grid-template-rows: $three-row-grid;
-    height: 100%;
-
-    &.inner {
-      grid-template-rows: $three-row-inner-grid;
-    }
-  }
-
-  .column-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: $five-column-grid;
-    border-bottom: var(--border);
-    height: 100%;
-
-    &.second-chunk {
-      grid-template-columns: $three-column-grid;
-
-      @media (max-width: 760px) {
-        grid-template-columns: unset;
-      }
-    }
-
-    &.inner {
-      grid-template-columns: $four-column-inner-grid;
-    }
-
-    .col {
-      border-right: var(--border);
-      justify-self: stretch;
-      align-self: stretch;
-    }
   }
 </style>
