@@ -1,14 +1,28 @@
 <template>
   <article>
-    <div class="title-wrapper">
-      <div class="container">
+    <div class="title-wr">
+      <div class="cnt">
         <h1 class="title">Show</h1>
         <div class="p">Work presentation</div>
       </div>
     </div>
-    <div class="details-wrapper">
-      <div class="container">
-
+    <div class="details-wr">
+      <div class="cnt">
+        <div class="left">
+          <h3 class="desc">
+            On the cliff <br>by the edge
+          </h3>
+          <div class="open-cta">
+            <span></span>
+            more
+          </div>
+        </div>
+        <div class="right">
+          <div class="counter">
+            <span class="crnt">5</span>
+            <span class="ttl">6</span>
+          </div>
+        </div>
       </div>
     </div>
   </article>
@@ -16,7 +30,7 @@
 
 <script>
   export default {
-    name: "show"
+    name: 'show'
   }
 </script>
 
@@ -27,21 +41,24 @@
     grid-column-start: col2;
     grid-row-start: row2;
     grid-column-end: span 4;
-
     display: grid;
     grid-template-columns: $four-column-inner-grid;
     overflow: visible;
 
-    [class*="-wrapper"] {
+    [class*="-wr"] {
       display: flex;
       align-items: center;
     }
 
-    .title-wrapper {
+    [class*="-cta"] {
+      cursor: pointer;
+    }
+
+    .title-wr {
       grid-column-start: i-col1;
       grid-column-end: i-col2;
 
-      .container {
+      .cnt {
         text-align: right;
       }
 
@@ -55,6 +72,7 @@
           font-size: 10vw;
         }
       }
+
       .p {
         margin: 0 1.8vw 0 0;
         text-transform: lowercase;
@@ -66,9 +84,61 @@
       }
     }
 
-    .details-wrapper {
+    .details-wr {
       grid-column-start: i-col3;
       grid-column-end: i-col4;
+
+      .cnt {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .left {
+          width: 60%;
+
+          .desc {
+            font-size: 2.6rem;
+            font-weight: 600;
+            margin-bottom: .4em;
+          }
+
+          .open-cta {
+            display: flex;
+            align-items: center;
+            text-transform: capitalize;
+            font-size: 1.3rem;
+
+            span {
+              display: block;
+              height: 30px;
+              width: 30px;
+              border: 2px solid white;
+              margin-right: 1em;
+            }
+          }
+        }
+
+        .right {
+          .counter {
+            display: flex;
+            align-items: flex-start;
+            margin-right: -3.2em;
+
+            span {
+              display: block;
+            }
+
+            .crnt {
+              font-size: 7rem;
+            }
+
+            .ttl {
+              font-size: 2rem;
+            }
+          }
+        }
+      }
     }
   }
 </style>
