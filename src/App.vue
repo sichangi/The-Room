@@ -1,7 +1,7 @@
 <template>
   <main ref="core">
     <background></background>
-    <grid></grid>
+<!--    <grid></grid>-->
     <div id="c">
       <top></top>
       <center></center>
