@@ -25,6 +25,9 @@
             <span class="ttl">6</span>
           </div>
         </div>
+        <div class="scroll">
+          scroll
+        </div>
       </div>
     </div>
   </article>
@@ -93,6 +96,7 @@
       .cnt {
         width: 100%;
         display: flex;
+        position: relative;
         align-items: center;
         justify-content: space-between;
 
@@ -147,6 +151,16 @@
               font-size: 2rem;
             }
           }
+        }
+
+        .scroll {
+          position: absolute;
+          bottom: -8rem;
+          right: 3.4rem;
+          font-size: .8rem;
+          letter-spacing: 1px;
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
         }
       }
     }
