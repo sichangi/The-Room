@@ -7,7 +7,7 @@
           <div class="lang">SW</div>
         </div>
         <div class="socials">
-          <a href="https://twitter.com" target="_blank" class="social">
+          <a href="https://twitter.com/mecolela" target="_blank" class="social">
             <svg>
               <use href="#twitter"></use>
             </svg>
@@ -21,11 +21,11 @@
             <svg>
               <use href="#gitlab"></use>
             </svg>
-          </a><a href="https://github.com" target="_blank" class="social">
-            <svg>
-              <use href="#github"></use>
-            </svg>
-          </a>
+          </a><a href="https://github.com/sichangi/the-room" target="_blank" class="social">
+          <svg>
+            <use href="#github"></use>
+          </svg>
+        </a>
         </div>
       </div>
       <div class="cnt-b">
