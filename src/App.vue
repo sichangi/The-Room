@@ -1,10 +1,13 @@
 <template>
   <main ref="core">
+    <symbols></symbols>
     <background></background>
-<!--    <grid></grid>-->
+    <!--    <grid></grid>-->
     <div id="c">
       <top></top>
+      <left-aside></left-aside>
       <center></center>
+      <right-aside></right-aside>
       <bottom></bottom>
     </div>
   </main>
@@ -16,10 +19,13 @@
   import Bottom from './components/Bottom'
   import Center from './components/Center'
   import Background from './components/Background'
+  import Symbols from './components/Symbols'
+  import RightAside from './components/right-aside'
+  import LeftAside from './components/left-aside'
 
   export default {
     name: 'App',
-    components: {Center, Bottom, Top, Background, Grid}
+    components: {LeftAside, RightAside, Symbols, Center, Bottom, Top, Background, Grid}
   }
 </script>
 
@@ -69,7 +75,7 @@
       height: 100%;
       overflow: visible;
       display: grid;
-      pointer-events: none;
+      /*pointer-events: none;*/
       background-color: rgba(0, 0, 0, 0.1);
       grid-template-columns: $five-column-grid;
       grid-template-rows: $three-row-grid;

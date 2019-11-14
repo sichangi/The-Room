@@ -1,18 +1,36 @@
 <template>
   <footer>
     <div class="wrapper">
-      <div class="container-a">
-        <div class="language"></div>
+      <div class="cnt-a">
+        <div class="langs">
+          <div class="lang">EN</div>
+          <div class="lang">SW</div>
+        </div>
         <div class="socials">
-          <div class="social"></div>
-          <div class="social"></div>
-          <div class="social"></div>
-          <div class="social"></div>
+          <a href="https://twitter.com" target="_blank" class="social">
+            <svg>
+              <use href="#twitter"></use>
+            </svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="social">
+            <svg>
+              <use href="#instagram"></use>
+            </svg>
+          </a>
+          <a href="https://gitlab.com/mecolela/the-room" target="_blank" class="social">
+            <svg>
+              <use href="#gitlab"></use>
+            </svg>
+          </a><a href="https://github.com" target="_blank" class="social">
+            <svg>
+              <use href="#github"></use>
+            </svg>
+          </a>
         </div>
       </div>
-      <div class="container-b">
+      <div class="cnt-b">
         <div class="copyright">
-          &copy; 2019 All rights reserved
+          &copy; {{new Date().getFullYear()}} All rights reserved
         </div>
       </div>
     </div>
@@ -21,7 +39,7 @@
 
 <script>
   export default {
-    name: "Bottom"
+    name: 'Bottom'
   }
 </script>
 
@@ -29,35 +47,53 @@
   @import "../assets/css/layout/_grid";
 
   footer {
+    display: flex;
+    align-items: center;
     grid-row-start: row3;
     grid-row-end: row3;
     grid-column-start: col1;
     grid-column-end: span 6;
-    display: flex;
-    align-items: center;
 
     .wrapper {
       grid-template-columns: $five-column-grid;
     }
 
-    .container-a {
+    .cnt-a {
       grid-column-start: col2;
       grid-column-end: col3;
+      color: white;
+      display: flex;
+      align-items: center;
+
+      .langs {
+        display: flex;
+        align-items: flex-end;
+        margin-right: 2em;
+
+        .lang {
+          display: block;
+          font-size: .8rem;
+          text-transform: uppercase;
+          font-weight: 600;
+          margin-right: 1em;
+          cursor: pointer;
+        }
+      }
 
       .socials {
         display: flex;
         align-items: center;
 
         .social {
+          display: block;
           height: 15px;
           width: 15px;
-          border: 1.8px solid whitesmoke;
-          margin-right: 1em;
+          margin-right: 1.2rem;
         }
       }
     }
 
-    .container-b {
+    .cnt-b {
       grid-column-start: col4;
       grid-column-end: col5-end;
 

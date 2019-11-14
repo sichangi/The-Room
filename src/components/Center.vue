@@ -13,7 +13,9 @@
             On the cliff <br>by the edge
           </h3>
           <div class="open-cta">
-            <span></span>
+            <span class="icon">
+              <svg ref="moreIcon"><use href="#plus"></use></svg>
+            </span>
             more
           </div>
         </div>
@@ -109,12 +111,20 @@
             text-transform: capitalize;
             font-size: 1.3rem;
 
-            span {
-              display: block;
+            .icon {
               height: 30px;
               width: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
               border: 2px solid white;
               margin-right: 1em;
+
+              svg {
+                height: 16px;
+                width: 16px;
+              }
             }
           }
         }

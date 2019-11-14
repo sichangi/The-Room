@@ -1,8 +1,8 @@
 import maskGen from '@/utils/maskGen'
 import {Power3, TimelineLite} from 'gsap'
-import imgCover from '@/utils/imgCover'
+// import imgCover from '@/utils/imgCover'
 
-export default class Slider {
+export default class Shifter {
   constructor(settings) {
     // base canvas
     this.canvas = null
@@ -100,7 +100,7 @@ export default class Slider {
       const toRender = () => (i === 0) ? this._renderSlide.bind(this, i) :
         (i === 1 && this.masked) ? this._renderMask.bind(this, i) : null
 
-      this.slides[i] = Slider._loadImage(path, toRender())
+      this.slides[i] = Shifter._loadImage(path, toRender())
 
     }, this)
   }
@@ -109,7 +109,7 @@ export default class Slider {
     // Set index to existent index if Not moved.
     i = i || this.slidesIndex
     this.slidesIndex = i
-    Slider._drawSlide(this.ctx, this.slides[i], this.Rect, this.globalRect)
+    Shifter._drawSlide(this.ctx, this.slides[i], this.Rect, this.globalRect)
   }
 
   async _renderMask(i) {
@@ -124,7 +124,7 @@ export default class Slider {
     await this._applyMask(this.maskCtx, rect)
     this.maskCtx.globalCompositeOperation = 'source-atop'
     this.maskCtx.save()
-    Slider._drawSlide(this.maskCtx, slide, rect, globalRect)
+    Shifter._drawSlide(this.maskCtx, slide, rect, globalRect)
   }
 
   async _applyMask(ctx, rect) {
@@ -160,12 +160,12 @@ export default class Slider {
     ctx.scale(state.scale, state.scale)
 
     if (this.globalRect) {
-      Slider._drawSlide(ctx, slide, {
+      Shifter._drawSlide(ctx, slide, {
         x: halfRectW + rect.x, y: halfRectH + rect.y,
         width: rect.width, height: rect.height
       }, this.globalRect)
     } else {
-      Slider._drawSlide(ctx, slide, {x: -halfRectW, y: -halfRectH, width: rect.width, height: rect.height})
+      Shifter._drawSlide(ctx, slide, {x: -halfRectW, y: -halfRectH, width: rect.width, height: rect.height})
     }
 
     ctx.resetTransform()

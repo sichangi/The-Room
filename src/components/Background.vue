@@ -1,14 +1,15 @@
 <template>
-  <div id="bg-canvas" @click="transit">
-    <div id="container-a">
-      <div id="container-b"></div>
+  <div id="bg">
+    <div id="cnt-a">
+      <div id="cnt-b"></div>
     </div>
   </div>
 </template>
 
 <script>
-  import Slider from '@/core/Slider'
+  import Shifter from '@/core/Shifter'
   import {Power3} from 'gsap'
+  import {debounce} from 'debounce'
 
   export default {
     name: 'Background',
@@ -17,6 +18,7 @@
         animDuration: 1,
         easing: Power3.easeOut,
         maskWidth: 20,
+        instance: null,
         base: {
           masked: false
         },
@@ -38,8 +40,12 @@
           'https://images.adsttc.com/media/images/5011/e227/28ba/0d5f/4c00/01a4/slideshow/stringio.jpg?1414280242',
           'https://images.adsttc.com/media/images/5011/e232/28ba/0d5f/4c00/01a8/slideshow/stringio.jpg?1414280267'
         ],
-        slideInView: 2
+        slideInView: 0
       }
+    },
+    created() {
+      this.instance = new VirtualScroll({multiplier: 5})
+      this.instance.on(debounce(this.triggerScroll, 600))
     },
     mounted() {
       this.init()
@@ -52,15 +58,15 @@
       },
       prepareContainers() {
         // base
-        this.base.container = document.getElementById('bg-canvas')
+        this.base.container = document.getElementById('bg')
 
         // Inner
-        this.inner.globalContainer = document.getElementById('bg-canvas')
-        this.inner.container = document.getElementById('container-b')
+        this.inner.globalContainer = document.getElementById('bg')
+        this.inner.container = document.getElementById('cnt-b')
 
         // Outer
-        this.outer.globalContainer = document.getElementById('bg-canvas')
-        this.outer.container = document.getElementById('container-a')
+        this.outer.globalContainer = document.getElementById('bg')
+        this.outer.container = document.getElementById('cnt-a')
       },
       prepareCanvas() {
         // TODO: Change slides / images to mobile friendly ones when viewport size changes accordinglye
@@ -72,15 +78,15 @@
           animationProps: {zoom: {scale: 2}}
         }
 
-        this.canvas.base = new Slider({
+        this.canvas.base = new Shifter({
           ...this.base,
           ...globalConfig
         })
-        this.canvas.inner = new Slider({
+        this.canvas.inner = new Shifter({
           ...this.inner,
           ...globalConfig
         })
-        this.canvas.outer = new Slider({
+        this.canvas.outer = new Shifter({
           ...this.outer,
           ...globalConfig
         })
@@ -90,10 +96,17 @@
         this.canvas.inner.onResize()
         this.canvas.outer.onResize()
       },
-      transit() {
-        if (++this.slideInView === this.slides.length) {
-          this.slideInView = 0
+      transit(direction) {
+        if (direction === 'UP') {
+          if (--this.slideInView < 0) {
+            this.slideInView = this.slides.length - 1
+          }
+        } else if (direction === 'DOWN') {
+          if (++this.slideInView === this.slides.length) {
+            this.slideInView = 0
+          }
         }
+        // console.log(direction, this.slideInView)
         this.canvas.base.navigate(this.slideInView)
         this.canvas.inner.navigate(this.slideInView)
         this.canvas.outer.navigate(this.slideInView, true)
@@ -102,7 +115,14 @@
           this.canvas.outer.navigate(this.slideInView)
           this.canvas.inner.navigate(this.slideInView, true)
         }, 400)
+      },
+      triggerScroll(e) {
+        const direction = e.deltaY > 0 ? 'UP' : 'DOWN'
+        this.transit(direction)
       }
+    },
+    beforeDestroy() {
+      this.instance.destroy()
     }
   }
 </script>
@@ -110,7 +130,7 @@
 <style lang="scss">
   @import "../assets/css/layout/_grid";
 
-  #bg-canvas {
+  #bg {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -133,7 +153,7 @@
       height: 100%;
     }
 
-    #container-a {
+    #cnt-a {
       position: relative;
       grid-row-start: row2;
       grid-column-start: col2;
@@ -147,7 +167,7 @@
       }
     }
 
-    #container-b {
+    #cnt-b {
       position: relative;
       grid-row-start: i-row2;
       grid-column-start: i-col2;
