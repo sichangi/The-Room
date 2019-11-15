@@ -7,21 +7,21 @@
           <div class="lang">SW</div>
         </div>
         <div class="socials">
-          <a href="https://twitter.com/mecolela" target="_blank" class="social">
+          <a href="https://twitter.com/mecolela" rel="noreferrer" target="_blank" class="social">
             <svg>
               <use href="#twitter"></use>
             </svg>
           </a>
-          <a href="https://instagram.com" target="_blank" class="social">
+          <a href="https://instagram.com" rel="noreferrer" target="_blank" class="social">
             <svg>
               <use href="#instagram"></use>
             </svg>
           </a>
-          <a href="https://gitlab.com/mecolela/the-room" target="_blank" class="social">
+          <a href="https://gitlab.com/mecolela/the-room" rel="noreferrer" target="_blank" class="social">
             <svg>
               <use href="#gitlab"></use>
             </svg>
-          </a><a href="https://github.com/sichangi/the-room" target="_blank" class="social">
+          </a><a href="https://github.com/sichangi/the-room" rel="noreferrer" target="_blank" class="social">
           <svg>
             <use href="#github"></use>
           </svg>
