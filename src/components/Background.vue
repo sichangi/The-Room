@@ -45,7 +45,7 @@
     },
     created() {
       this.instance = new VirtualScroll({multiplier: 5})
-      this.instance.on(debounce(this.triggerScroll, 630))
+      this.instance.on(debounce(this.triggerScroll, 760))
     },
     mounted() {
       this.init()
