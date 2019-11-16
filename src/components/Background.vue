@@ -34,11 +34,11 @@
           outer: null
         },
         slides: [
-          'https://images.adsttc.com/media/images/5011/e21e/28ba/0d5f/4c00/01a1/slideshow/stringio.jpg?1414280234',
-          'https://images.adsttc.com/media/images/5011/e20e/28ba/0d5f/4c00/019c/slideshow/stringio.jpg?1414280247',
-          'https://images.adsttc.com/media/images/5011/e230/28ba/0d5f/4c00/01a7/slideshow/stringio.jpg?1414280265',
-          'https://images.adsttc.com/media/images/5011/e227/28ba/0d5f/4c00/01a4/slideshow/stringio.jpg?1414280242',
-          'https://images.adsttc.com/media/images/5011/e232/28ba/0d5f/4c00/01a8/slideshow/stringio.jpg?1414280267'
+          '/imgs/m-1.jpg',
+          '/imgs/m-2.jpg',
+          '/imgs/m-3.jpg',
+          '/imgs/m-4.jpg',
+          '/imgs/m-5.jpg'
         ],
         slideInView: 0
       }
