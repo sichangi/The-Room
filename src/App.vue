@@ -2,31 +2,31 @@
   <main ref="core">
     <symbols></symbols>
     <background></background>
-    <!--    <grid></grid>-->
+<!--    <grid></grid>-->
     <div id="c">
       <top></top>
-      <left-aside></left-aside>
+      <!--      <left-aside></left-aside>-->
       <center></center>
-      <right-aside></right-aside>
+<!--      <right-aside></right-aside>-->
       <bottom></bottom>
     </div>
   </main>
 </template>
 
 <script>
-  import Grid from './Grid'
-  import Top from './components/Top'
-  import Bottom from './components/Bottom'
-  import Center from './components/Center'
-  import Background from './components/Background'
-  import Symbols from './components/Symbols'
-  import RightAside from './components/right-aside'
-  import LeftAside from './components/left-aside'
+  import Grid from './Grid';
+  import Top from './components/Top';
+  import Bottom from './components/Bottom';
+  import Center from './components/Center';
+  import Background from './components/Background';
+  import Symbols from './components/Symbols';
+  import RightAside from './components/right-aside';
+  import LeftAside from './components/left-aside';
 
   export default {
     name: 'App',
     components: {LeftAside, RightAside, Symbols, Center, Bottom, Top, Background, Grid}
-  }
+  };
 </script>
 
 <style lang="scss" src="./assets/css/main.scss"></style>
@@ -79,6 +79,10 @@
       background-color: rgba(0, 0, 0, 0.1);
       grid-template-columns: $five-column-grid;
       grid-template-rows: $three-row-grid;
+
+      @media (max-width: 760px) {
+        grid-template-rows: $three-row-grid-sm;
+      }
     }
   }
 </style>

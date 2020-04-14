@@ -1,10 +1,12 @@
-$three-row-grid: [row1] 1fr [row1-end row2] 6fr [row2-end row3] 1fr;
-$three-row-inner-grid: [i-row1] 1fr [i-row-1-end i-row2] 4fr [i-row-2-end i-row3] 1fr;
+$three-row-grid: [row1] 1fr [row1-end row2] 8fr [row2-end row3] 1fr [row3-end];
+$three-row-grid-sm: [row1] 1fr [row1-end row2] 10fr [row2-end row3] 1fr [row3-end];
+$three-row-inner-grid: [i-row1] 1fr [i-row-1-end i-row2] 4fr [i-row-2-end i-row3] 1fr [i-row3-end];
 
+$three-column-grid: [col1] 1fr [col-1-end col2] 10fr [col-2-end col3] 1fr [col3-end];
+$three-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 8fr [i-col2-end i-col3] 1fr [i-col3-end];
 $four-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 4fr [i-col2-end i-col3] 4fr [i-col3-end i-col4] 1fr [i-col4-end];
-$five-column-grid: [col1] 1fr [col1-end col2] 1fr [col2-end col3] 4fr [col3-end col4] 4fr [col4-end col5] 1fr [col5-end col6] 1fr;
-$three-column-grid: [col1] 1fr [col-1-end col2] 10fr [col-2-end col3] 1fr;
-$three-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 8fr [i-col2-end i-col3] 1fr;
+$four-column-inner-grid-sm: [i-col1] 1fr [i-col1-end i-col2] 6fr [i-col2-end i-col3] 6fr [i-col3-end i-col4] 1fr [i-col4-end];
+$five-column-grid: [col1] 1fr [col1-end col2] 1fr [col2-end col3] 4fr [col3-end col4] 4fr [col4-end col5] 1fr [col5-end col6] 1fr [col6-end];
 
 .wrapper {
   display: grid;
@@ -28,6 +30,10 @@ $three-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 8fr [i-col2-end i-col
   grid-template-rows: $three-row-grid;
   height: 100%;
 
+  @media (max-width: 760px) {
+    grid-template-rows: $three-row-grid-sm;
+  }
+
   &.inner {
     grid-template-rows: $three-row-inner-grid;
   }
@@ -42,14 +48,14 @@ $three-column-inner-grid: [i-col1] 1fr [i-col1-end i-col2] 8fr [i-col2-end i-col
 
   &.second-chunk {
     grid-template-columns: $three-column-grid;
-
-    @media (max-width: 760px) {
-      grid-template-columns: unset;
-    }
   }
 
   &.inner {
     grid-template-columns: $four-column-inner-grid;
+
+    @media (max-width: 760px) {
+      grid-template-columns: $four-column-inner-grid-sm;
+    }
   }
 
   .col {

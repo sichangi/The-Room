@@ -7,17 +7,24 @@
 </template>
 
 <script>
-  import Shifter from '@/core/Shifter'
-  import {Power3} from 'gsap'
-  import {debounce} from 'debounce'
+  import { Power3 } from 'gsap';
+  import { debounce, Shifter } from '../lib';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'Background',
+    computed: mapGetters({
+      pages: 'show/pages',
+      currentIx: 'show/currentIx'
+    }),
     data() {
       return {
-        animDuration: 1,
+        animDuration: 1.2,
+        shiftDelay: 370,
         easing: Power3.easeOut,
         maskWidth: 20,
+        maskWidthMobile: 15,
+        inTransit: false,
         instance: null,
         base: {
           masked: false
@@ -32,99 +39,117 @@
           base: null,
           inner: null,
           outer: null
-        },
-        slides: [
-          '/imgs/m-1.jpg',
-          '/imgs/m-2.jpg',
-          '/imgs/m-3.jpg',
-          '/imgs/m-4.jpg',
-          '/imgs/m-5.jpg'
-        ],
-        slideInView: 0
-      }
+        }
+      };
     },
     created() {
-      this.instance = new VirtualScroll({multiplier: 5})
-      this.instance.on(debounce(this.triggerScroll, 760))
+      this.instance = new VirtualScroll({multiplier: 5});
+      this.instance.on(debounce(this.triggerScroll, 200));
     },
     mounted() {
-      this.init()
-      window.onresize = this.handleResize
+      this.init();
+      let resizeTimeout;
+      window.onresize = () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(this.handleResize, 50);
+      };
     },
     methods: {
       init() {
-        this.prepareContainers()
-        this.prepareCanvas()
+        const pc = this.pages.map(x => x.img);
+        const mobile = this.pages.map(x => x.mobileImg);
+        this.prepareContainers();
+        this.prepareCanvas(...(this.isMobile ? [mobile, this.maskWidthMobile] : [pc, this.maskWidth]));
       },
       prepareContainers() {
         // base
-        this.base.container = document.getElementById('bg')
+        this.base.container = document.getElementById('bg');
 
         // Inner
-        this.inner.globalContainer = document.getElementById('bg')
-        this.inner.container = document.getElementById('cnt-b')
+        this.inner.globalContainer = document.getElementById('bg');
+        this.inner.container = document.getElementById('cnt-b');
+        this.inner.container.style.display = this.isMobile ? 'none' : 'block';
 
         // Outer
-        this.outer.globalContainer = document.getElementById('bg')
-        this.outer.container = document.getElementById('cnt-a')
+        this.outer.globalContainer = document.getElementById('bg');
+        this.outer.container = document.getElementById('cnt-a');
       },
-      prepareCanvas() {
-        // TODO: Change slides / images to mobile friendly ones when viewport size changes accordinglye
+      prepareCanvas(slides, maskWidth) {
         const globalConfig = {
-          maskWidth: this.maskWidth,
-          slides: this.slides,
+          slides,
+          maskWidth,
           easing: this.easing,
           duration: this.animDuration,
           animationProps: {zoom: {scale: 2}}
-        }
+        };
 
         this.canvas.base = new Shifter({
           ...this.base,
           ...globalConfig
-        })
+        });
         this.canvas.inner = new Shifter({
           ...this.inner,
           ...globalConfig
-        })
+        });
         this.canvas.outer = new Shifter({
           ...this.outer,
           ...globalConfig
-        })
+        });
       },
-      handleResize() {
-        this.canvas.base.onResize()
-        this.canvas.inner.onResize()
-        this.canvas.outer.onResize()
+      async triggerScroll(e) {
+        this.transit(e.deltaY > 0 ? 'UP' : 'DOWN');
       },
       transit(direction) {
-        if (direction === 'UP') {
-          if (--this.slideInView < 0) {
-            this.slideInView = this.slides.length - 1
+        if (this.inTransit) return;
+        return new Promise(async resolve => {
+          this.inTransit = true;
+          let result;
+          if (direction === 'UP') {
+            result = this.currentIx - 1 < 0 ? this.pages.length - 1 : this.currentIx - 1;
+          } else if (direction === 'DOWN') {
+            result = this.currentIx + 1 === this.pages.length ? 0 : this.currentIx + 1;
           }
-        } else if (direction === 'DOWN') {
-          if (++this.slideInView === this.slides.length) {
-            this.slideInView = 0
-          }
-        }
-        // console.log(direction, this.slideInView)
-        this.canvas.base.navigate(this.slideInView)
-        this.canvas.inner.navigate(this.slideInView)
-        this.canvas.outer.navigate(this.slideInView, true)
 
-        setTimeout(() => {
-          this.canvas.outer.navigate(this.slideInView)
-          this.canvas.inner.navigate(this.slideInView, true)
-        }, 400)
+          this.canvas.base.navigate(result);
+          this.canvas.inner.navigate(result);
+          this.canvas.outer.navigate(result, true);
+
+          setTimeout(() => this.$store.dispatch('show/setPage', result), 0);
+          setTimeout(async () => {
+            await Promise.all([
+              this.canvas.outer.navigate(result),
+              this.canvas.inner.navigate(result, true)
+            ]);
+            this.inTransit = false;
+            resolve();
+          }, this.shiftDelay);
+        });
       },
-      triggerScroll(e) {
-        const direction = e.deltaY > 0 ? 'UP' : 'DOWN'
-        this.transit(direction)
+      async handleResize() {
+        // Hide the inner ring on mobile
+        this.inner.container.style.display = this.isMobile ? 'none' : 'block';
+
+        // Update the images to the mobile ones
+        const update = {
+          slides: this.isMobile ? this.pages.map(x => x.mobileImg) : this.pages.map(x => x.img),
+          maskWidth: this.isMobile ? this.maskWidthMobile : this.maskWidth
+        };
+        await Promise.all([
+          this.canvas.base.update(update),
+          this.canvas.inner.update(update),
+          this.canvas.outer.update(update)
+        ]);
+
+        // Trigger appropriate resize
+        this.canvas.base.onResize();
+        this.canvas.inner.onResize();
+        this.canvas.outer.onResize();
       }
     },
     beforeDestroy() {
-      this.instance.destroy()
+      this.instance.destroy();
     }
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -143,6 +168,10 @@
     grid-template-rows: $three-row-grid;
     grid-template-columns: $five-column-grid;
     background-color: rgba(0, 0, 0, 0.4);
+
+    @media (max-width: 760px) {
+      grid-template-rows: $three-row-grid-sm;
+    }
 
     canvas {
       position: absolute;

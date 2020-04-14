@@ -2,19 +2,14 @@
   <footer>
     <div class="wrapper">
       <div class="cnt-a">
-        <div class="langs">
-          <div class="lang">EN</div>
-          <div class="lang">SW</div>
-        </div>
+<!--        <div class="langs">-->
+<!--          <div class="lang">EN</div>-->
+<!--          <div class="lang">SW</div>-->
+<!--        </div>-->
         <div class="socials">
           <a href="https://twitter.com/mecolela" rel="noreferrer" target="_blank" class="social">
             <svg>
               <use href="#twitter"></use>
-            </svg>
-          </a>
-          <a href="https://instagram.com" rel="noreferrer" target="_blank" class="social">
-            <svg>
-              <use href="#instagram"></use>
             </svg>
           </a>
           <a href="https://gitlab.com/mecolela/the-room" rel="noreferrer" target="_blank" class="social">
@@ -30,7 +25,7 @@
       </div>
       <div class="cnt-b">
         <div class="copyright">
-          &copy; {{new Date().getFullYear()}} All rights reserved
+          &copy; {{new Date().getFullYear()}}
         </div>
       </div>
     </div>
@@ -74,7 +69,7 @@
           display: block;
           font-size: .8rem;
           text-transform: uppercase;
-          font-weight: 600;
+          font-weight: 500;
           margin-right: 1em;
           cursor: pointer;
         }
@@ -100,6 +95,10 @@
       .copyright {
         font-weight: 400;
         font-size: .8rem;
+
+        @media (max-width: 760px) {
+          text-align: right;
+        }
       }
     }
   }

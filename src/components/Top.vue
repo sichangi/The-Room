@@ -2,17 +2,28 @@
   <header>
     <div class="wrapper">
       <nav class="left-nav">
+        <div class="logo">
+          <svg><use href="#logo"></use></svg>
+        </div>
         <div class="nav-items">
-          <div class="nav-item">Works</div>
+          <div class="nav-item">works</div>
           <div class="nav-item">clients</div>
         </div>
       </nav>
       <nav class="right-nav">
-        <div class="logo"><span>the</span> ROOM</div>
+        <div class="logo">
+          <svg><use href="#logo"></use></svg>
+        </div>
         <div class="nav-items">
           <div class="nav-item">news</div>
           <div class="nav-item">about us</div>
-          <div class="nav-item">contacts</div>
+        </div>
+        <div class="nav-drop">
+          <div class="icon">
+            <svg>
+              <use href="#ham"></use>
+            </svg>
+          </div>
         </div>
       </nav>
     </div>
@@ -22,7 +33,7 @@
 <script>
   export default {
     name: 'Top'
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -37,12 +48,15 @@
     grid-column-end: span 6;
     grid-row-start: row1;
     grid-row-end: row1;
-
     display: flex;
     align-items: center;
 
     .wrapper {
       grid-template-columns: $five-column-grid;
+
+      @media(max-width: 760px) {
+        position: relative;
+      }
     }
 
     nav {
@@ -52,35 +66,18 @@
 
       .logo {
         display: flex;
-        align-items: flex-end;
-        font-weight: 700;
-        font-size: 4.8vw;
+        align-items: center;
         line-height: 0;
 
-        @media(min-width: 740px) {
-          font-size: 1.4vw;
+        svg {
+          width: 100px;
+          max-height: 40px;
         }
 
-        span {
-          font-size: 2.8vw;
-          font-weight: 400;
-          margin-right: .2rem;
-          text-transform: uppercase;
-          position: relative;
-
-          &:after {
-            content: "";
-            position: absolute;
-            margin-top: .5rem;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: white;
-          }
-
-          @media(min-width: 740px) {
-            font-size: .8vw;
-          }
+        @media(max-width: 760px) {
+          display: flex;
+          width: 80px;
+          left: 0;
         }
       }
 
@@ -89,22 +86,28 @@
         align-items: center;
       }
 
-
       .nav-item {
         cursor: pointer;
-        font-weight: 500;
+        font-weight: 400;
         text-transform: uppercase;
-        font-size: 2.5vw;
-        letter-spacing: .4px;
+        font-size: 1em;
+        letter-spacing: .6px;
 
         @media(min-width: 760px) {
-          font-size: .8vw;
+          font-size: .8em;
         }
       }
 
       &.left-nav {
         grid-column-start: col2;
         grid-column-end: col3-end;
+
+        .logo {
+          display: none;
+          @media(max-width: 760px) {
+            display: flex;
+          }
+        }
 
         .nav-item {
           margin-right: $nav-margin-size;
@@ -119,11 +122,31 @@
         grid-column-end: col5-end;
         justify-content: space-between;
 
+        .logo {
+          @media(max-width: 760px) {
+            display: none;
+          }
+        }
+
         .nav-item {
           margin-left: $nav-margin-size;
           @media(max-width: 760px) {
             display: none;
           }
+        }
+      }
+
+      .nav-drop {
+        color: white;
+        cursor: pointer;
+
+        .icon {
+          height: 18px;
+          width: 18px;
+        }
+
+        @media(min-width: 760px) {
+          display: none;
         }
       }
     }
