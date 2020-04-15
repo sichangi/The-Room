@@ -18,12 +18,12 @@ function generate(w, h, sw) {
 
 function drawInlineSVG(svgElement) {
   return new Promise(((resolve) => {
-    var svgURL = new XMLSerializer().serializeToString(svgElement);
-    var img = new Image();
+    const svgURL = new XMLSerializer().serializeToString(svgElement);
+    const img = new Image();
     img.onload = function () {
       resolve(this);
     };
-    img.src = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
+    img.src = 'data:image/svg+xml; charset=utf8,' + encodeURIComponent(svgURL);
   }));
 }
 

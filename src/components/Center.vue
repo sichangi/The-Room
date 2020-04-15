@@ -277,7 +277,7 @@
         position: absolute;
 
         .desc {
-          font-size: 2.4vw;
+          font-size: 2.6rem;
           line-height: 1.4;
           font-weight: 500;
           margin: 0;

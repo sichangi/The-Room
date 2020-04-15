@@ -1,33 +1,51 @@
-import maskGen from '@/utils/maskGen';
-import { Power3, TweenLite } from 'gsap';
+let shifter;
 
-// import anime from 'animejs';
+// Declare anime.js stubs
+class NodeList {
+}
 
-export class Shifter {
+class HTMLCollection {
+}
+
+class SVGElement {
+}
+
+const window = {Promise};
+
+self.addEventListener('message', function (e) {
+  const data = e.data;
+
+  switch (data.event) {
+    case 'init':
+      if (!shifter) {
+        importScripts('https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js');
+        shifter = new Shifter(data.context);
+      }
+      break;
+    case 'navigate':
+      shifter.navigate(data.data);
+      break;
+  }
+});
+
+class Shifter {
+
   constructor(settings) {
     // base canvas
-    this.canvas = null;
+    this.canvas = settings.canvas;
     this.ctx = null;
 
     // Mask canvas
-    this.maskCanvas = null;
+    this.maskCanvas = settings.maskCanvas;
     this.maskCtx = null;
 
     // Window && container bounds
-    this.Rect = null;
-    this.globalRect = null;
-
-    // Container reference
-    this.container = settings.container;
-    if (!this.container) throw 'No container provided';
-    this.globalContainer = settings.globalContainer;
+    this.Rect = settings.Rect;
+    this.globalRect = settings.globalRect;
 
     // Slides
     this.slides = settings.slides.slice();
-    if (this.slides.length <= 1) throw 'Very few slides to work with';
     this.slidesIndex = 0;
-    // this.prevSlidesIndex = 0;
-    // this.indexOffset = 1;
 
     // Apply a mask
     this.masked = settings.masked;
@@ -42,16 +60,12 @@ export class Shifter {
     this.animationProps = settings.animationProps;
 
     this._init();
+    self.postMessage({event: 'initialized', data: true});
   }
 
   static async _loadImage(path) {
-    return new Promise((resolve => {
-      const image = new Image();
-      image.src = path;
-      image.onload = () => {
-        resolve(image);
-      };
-    }));
+    const blob = await fetch(path).then(x => x.blob());
+    return createImageBitmap(blob);
   }
 
   static _drawSlide(ctx, slide, rect, globalRect) {
@@ -66,40 +80,17 @@ export class Shifter {
 
   _init() {
     // prepare the canvas
-    this._addCanvas();
-    // prepare and append the mask
-    if (this.masked) this._addMask();
-    // prepare the slides
-    setTimeout(this._addSlides.bind(this, this.slides), 0);
-  }
-
-  _addCanvas() {
-    this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
-
-    this.Rect = this.container.getBoundingClientRect();
-    if (this.globalContainer) this.globalRect = this.globalContainer.getBoundingClientRect();
-
-    // bind canvas to containers height and width
-    this.canvas.width = this.Rect.width;
-    this.canvas.height = this.Rect.height;
-
-    // Attach canvas to container
-    this.container.appendChild(this.canvas);
+    // prepare and append the mask
+    if (this.masked) {
+      this.maskCtx = this.maskCanvas.getContext('2d');
+      this.maskCtx.imageSmoothingEnabled = false;
+    }
+    // prepare the slides
+    setTimeout(this._setSlides.bind(this, this.slides), 0);
   }
 
-  _addMask() {
-    this.maskCanvas = document.createElement('canvas');
-    this.maskCanvas.className += 'mask';
-    this.maskCtx = this.maskCanvas.getContext('2d');
-    this.maskCtx.imageSmoothingEnabled = false;
-    this.maskCanvas.width = this.Rect.width;
-    this.maskCanvas.height = this.Rect.height;
-
-    this.container.appendChild(this.maskCanvas);
-  }
-
-  async _addSlides(slides = []) {
+  async _setSlides(slides = []) {
     return Promise.all(slides.map(async (path, i) => {
       const runRenderer = !i ? this._renderSlide.bind(this, i) :
         (i === 1 && this.masked) ? this._renderMask.bind(this, i) : () => true;
@@ -133,14 +124,26 @@ export class Shifter {
 
   async _applyMask(ctx, rect) {
     this.mask = (!this.mask || this.isUpdatingBounds) ?
-      await maskGen(rect.height, rect.width, this.maskWidth)
+      await this.getMask(rect.height, rect.width, this.maskWidth)
       : this.mask;
     this.maskCtx.drawImage(this.mask, 0, 0);
   }
 
-  _updateBounds() {
-    this.Rect = this.container.getBoundingClientRect();
-    if (this.globalContainer) this.globalRect = this.globalContainer.getBoundingClientRect();
+  getMask(h, w, mw = 10) {
+    return new Promise(resolve => {
+      self.postMessage({event: 'mask:gen', args: {h, w, mw}});
+      self.addEventListener('message', async ev => {
+        const {event, mask} = ev.data;
+        if (event === 'mask:gen') {
+          resolve(createImageBitmap(mask));
+        }
+      });
+    });
+  }
+
+  _updateBounds({rect, globalRect}) {
+    this.Rect = rect;
+    if (globalRect) this.globalRect = globalRect;
 
     const {width, height} = this.Rect;
 
@@ -165,18 +168,11 @@ export class Shifter {
 
     if (this.globalRect) {
       Shifter._drawSlide(ctx, slide, {
-        x: halfRectW + rect.x,
-        y: halfRectH + rect.y,
-        width: rect.width,
-        height: rect.height
+        x: halfRectW + rect.x, y: halfRectH + rect.y,
+        width: rect.width, height: rect.height
       }, this.globalRect);
     } else {
-      Shifter._drawSlide(ctx, slide, {
-        x: -halfRectW,
-        y: -halfRectH,
-        width: rect.width,
-        height: rect.height
-      });
+      Shifter._drawSlide(ctx, slide, {x: -halfRectW, y: -halfRectH, width: rect.width, height: rect.height});
     }
 
     ctx.resetTransform();
@@ -189,23 +185,14 @@ export class Shifter {
         globalAlpha: 0
       };
 
-      TweenLite.to(state, this.duration,
-        {
-          globalAlpha: 1,
-          scale: 1,
-          ease: Power3.easeOut,
-          onUpdate: () => this._animate(index, ctx, state),
-          onComplete: () => resolve()
-        });
-
-      // anime({
-      //   targets: state,
-      //   globalAlpha: 1,
-      //   scale: 1,
-      //   easing: this.easing || 'easeOutCubic',
-      //   update: () => this._animate(index, ctx, state),
-      //   complete: resolve
-      // });
+      anime({
+        targets: state,
+        globalAlpha: 1,
+        scale: 1,
+        easing: this.easing || 'linear',
+        update: () => this._animate(index, ctx, state),
+        complete: resolve
+      });
     }));
   }
 
@@ -216,43 +203,31 @@ export class Shifter {
         globalAlpha: 1
       };
 
-      TweenLite.to(state, this.duration,
-        {
-          scale: 1.2,
-          globalAlpha: 0,
-          ease: Power3.easeOut,
-          onUpdate: () => this._animate(index, ctx, state),
-          onComplete: () => resolve()
-        });
-
-      // anime({
-      //   targets: state,
-      //   scale: 1.2,
-      //   globalAlpha: 0,
-      //   easing: this.easing || 'easeOutCubic',
-      //   update: () => this._animate(index, ctx, state),
-      //   complete: resolve
-      // });
+      anime({
+        targets: state,
+        scale: 1.2,
+        globalAlpha: 0,
+        easing: this.easing || 'linear',
+        update: () => this._animate(index, ctx, state),
+        complete: resolve
+      });
     }));
   }
 
   async update({slides, maskWidth}) {
     if (maskWidth) this.maskWidth = maskWidth;
-    if (Array.isArray(slides)) await this._addSlides.bind(this, slides)();
+    if (Array.isArray(slides)) await this._setSlides.bind(this, slides)();
   }
 
-  onResize() {
-    if (document.readyState === 'complete') {
-      this.isUpdatingBounds = true;
-      this._updateBounds();
-      this._renderSlide();
-      if (this.masked) this._renderMask().catch(console.error);
-      this.isUpdatingBounds = false;
-    }
+  onResize(update) {
+    this.isUpdatingBounds = true;
+    this._updateBounds(update);
+    this._renderSlide();
+    if (this.masked) this._renderMask().catch(console.error);
+    this.isUpdatingBounds = false;
   }
 
-  async navigate(index, mask, {easing, disable = false} = {}) {
-    if (disable) return;
+  async navigate({index, mask, easing = false}) {
     if (index === this.slidesIndex) return;
     if (easing) this.easing = easing;
     if (this.masked && mask) {
@@ -270,5 +245,10 @@ export class Shifter {
         this._leave(this.slidesIndex, this.ctx)
       ]);
     }
+    this.workerRes('navigate:complete', {slidesIndex: this.slidesIndex});
+  }
+
+  workerRes(event, data) {
+    self.postMessage({event, data});
   }
 }

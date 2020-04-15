@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import { Power3 } from 'gsap';
-  import { debounce, Shifter } from '../lib';
+  import { debounce } from '../lib';
+  import { Shifter } from '../lib/shifter';
   import { mapGetters } from 'vuex';
 
   export default {
@@ -20,8 +20,8 @@
     data() {
       return {
         animDuration: 1.2,
-        shiftDelay: 370,
-        easing: Power3.easeOut,
+        shiftDelay: 400,
+        easing: 'easeOutCubic',
         maskWidth: 20,
         maskWidthMobile: 15,
         inTransit: false,
@@ -114,7 +114,7 @@
           this.canvas.inner.navigate(result);
           this.canvas.outer.navigate(result, true);
 
-          setTimeout(() => this.$store.dispatch('show/setPage', result), 0);
+          setTimeout(() => this.$store.dispatch('show/setPage', result), this.shiftDelay / 2);
           setTimeout(async () => {
             await Promise.all([
               this.canvas.outer.navigate(result),

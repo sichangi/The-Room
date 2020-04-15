@@ -1,2 +1,2 @@
-export {Shifter} from './Shifter'
+export {Shifter} from './shifter'
 export {debounce} from './debounce'
