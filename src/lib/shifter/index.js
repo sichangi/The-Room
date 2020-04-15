@@ -1,5 +1,5 @@
 import maskGen from '@/utils/maskGen';
-import { Power3, TimelineLite } from 'gsap';
+import { Power3, TweenLite } from 'gsap';
 
 export class Shifter {
   constructor(settings) {
@@ -131,7 +131,7 @@ export class Shifter {
 
   async _applyMask(ctx, rect) {
     this.mask = (!this.mask || this.isUpdatingBounds) ?
-      await maskGen(rect.height, rect.width, this.maskWidth, ctx)
+      await maskGen(rect.height, rect.width, this.maskWidth)
       : this.mask;
     this.maskCtx.drawImage(this.mask, 0, 0);
   }
@@ -163,11 +163,18 @@ export class Shifter {
 
     if (this.globalRect) {
       Shifter._drawSlide(ctx, slide, {
-        x: halfRectW + rect.x, y: halfRectH + rect.y,
-        width: rect.width, height: rect.height
+        x: halfRectW + rect.x,
+        y: halfRectH + rect.y,
+        width: rect.width,
+        height: rect.height
       }, this.globalRect);
     } else {
-      Shifter._drawSlide(ctx, slide, {x: -halfRectW, y: -halfRectH, width: rect.width, height: rect.height});
+      Shifter._drawSlide(ctx, slide, {
+        x: -halfRectW,
+        y: -halfRectH,
+        width: rect.width,
+        height: rect.height
+      });
     }
 
     ctx.resetTransform();
@@ -175,39 +182,38 @@ export class Shifter {
 
   _enter(index, ctx) {
     return new Promise((resolve => {
-      let state = {};
+      let state = {
+        scale: 1.2,
+        globalAlpha: 0
+      };
 
-      const tl = new TimelineLite({
-        onUpdate: () => {
-          this._animate(index, ctx, state);
-        },
-        onComplete: () => {
-          resolve();
-        }
-      });
-
-      tl.set(state, {
-        globalAlpha: 0,
-        scale: 1.2
-      });
-
-      tl.to(state, this.duration, {
-        globalAlpha: 1,
-        scale: 1,
-        ease: this.easing || Power3.easeOut
-      });
+      TweenLite.to(state, this.duration,
+        {
+          globalAlpha: 1,
+          scale: 1,
+          ease: Power3.easeOut,
+          onUpdate: () => {
+            this._animate(index, ctx, state);
+          },
+          onComplete: () => {
+            resolve();
+          }
+        });
     }));
   }
 
   _leave(index, ctx) {
     return new Promise((resolve => {
-      let state = {scale: 1, globalAlpha: 1};
+      let state = {
+        scale: 1,
+        globalAlpha: 1
+      };
 
       TweenLite.to(state, this.duration,
         {
           scale: 1.2,
           globalAlpha: 0,
-          ease: this.easing || Power3.easeOut,
+          ease: Power3.easeOut,
           onUpdate: () => {
             this._animate(index, ctx, state);
           },
@@ -233,9 +239,10 @@ export class Shifter {
     }
   }
 
-  async navigate(index, mask, disable = false) {
+  async navigate(index, mask, {easing, disable = false} = {}) {
     if (disable) return;
     if (index === this.slidesIndex) return;
+    if (easing) this.easing = easing;
     if (this.masked && mask) {
       const to = index + 1;
       const out = this.slidesIndex + 1;
