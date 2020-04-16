@@ -99,7 +99,7 @@
 
       .copyright {
         font-weight: 400;
-        font-size: 1rem;
+        font-size: 1em;
 
         @media (max-width: 770px) {
           text-align: right;

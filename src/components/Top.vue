@@ -94,7 +94,7 @@
         letter-spacing: .6px;
 
         @media(min-width: 770px) {
-          font-size: 1rem;
+          font-size: .92em;
         }
       }
 
