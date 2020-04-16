@@ -70,7 +70,7 @@
         line-height: 0;
 
         svg {
-          width: 100px;
+          width: 120px;
           max-height: 40px;
         }
 
@@ -93,8 +93,8 @@
         font-size: 1em;
         letter-spacing: .6px;
 
-        @media(min-width: 760px) {
-          font-size: .8em;
+        @media(min-width: 770px) {
+          font-size: 1rem;
         }
       }
 

@@ -5,7 +5,9 @@ function generate(w, h, sw) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
 
-  svg.setAttribute('viewBox', `0 0 ${h} ${w}`);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  svg.setAttribute('width', w);
+  svg.setAttribute('height', h);
   path.setAttribute('height', '100%');
   path.setAttribute('width', '100%');
   path.setAttribute('stroke', '#363842');
@@ -34,5 +36,5 @@ function drawInlineSVG(svgElement) {
  * @param mw - svg stroke width for mask
  */
 export default async function (h, w, mw = 10) {
-  return drawInlineSVG(generate(h, w, mw));
+  return drawInlineSVG(generate(w, h, mw));
 }

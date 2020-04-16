@@ -135,7 +135,7 @@ class Shifter {
       self.addEventListener('message', async ev => {
         const {event, mask} = ev.data;
         if (event === 'mask:gen') {
-          resolve(createImageBitmap(mask));
+          resolve(mask);
         }
       });
     });

@@ -100,10 +100,7 @@ export class Shifter {
       case 'mask:gen':
         const {h, w, mw} = data.args;
         const img = await maskGen(h, w, mw);
-        const screen = new OffscreenCanvas(w, h);
-        const ctx = screen.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        this.worker.postMessage({event: 'mask:gen', mask: screen.transferToImageBitmap()});
+        this.worker.postMessage({event: 'mask:gen', mask: await createImageBitmap(img)});
         break;
       case 'navigate:complete':
         break;

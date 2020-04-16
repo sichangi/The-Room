@@ -208,6 +208,10 @@
       grid-template-columns: $four-column-inner-grid-sm;
     }
 
+    @media (max-width: 780px) {
+      display: none;
+    }
+
     [class*="-cta"] {
       cursor: pointer;
     }
@@ -376,10 +380,11 @@
         right: 0;
         pointer-events: none;
         margin: auto;
-        bottom: -1em;
+        bottom: 13.4vh;
         display: flex;
         align-items: center;
-        font-size: 1rem;
+        font-size: 1.1rem;
+        font-weight: 400;
         position: absolute;
         letter-spacing: 1px;
         writing-mode: vertical-rl;

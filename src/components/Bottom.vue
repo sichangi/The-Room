@@ -2,10 +2,10 @@
   <footer>
     <div class="wrapper">
       <div class="cnt-a">
-<!--        <div class="langs">-->
-<!--          <div class="lang">EN</div>-->
-<!--          <div class="lang">SW</div>-->
-<!--        </div>-->
+        <!--        <div class="langs">-->
+        <!--          <div class="lang">EN</div>-->
+        <!--          <div class="lang">SW</div>-->
+        <!--        </div>-->
         <div class="socials">
           <a href="https://twitter.com/mecolela" rel="noreferrer" target="_blank" class="social">
             <svg>
@@ -35,7 +35,7 @@
 <script>
   export default {
     name: 'Bottom'
-  }
+  };
 </script>
 
 <style lang="scss">
@@ -81,9 +81,14 @@
 
         .social {
           display: block;
-          height: 15px;
-          width: 15px;
+          height: 18px;
+          width: 18px;
           margin-right: 1.2rem;
+
+          @media (max-width: 770px) {
+            height: 14px;
+            width: 14px;
+          }
         }
       }
     }
@@ -94,10 +99,11 @@
 
       .copyright {
         font-weight: 400;
-        font-size: .8rem;
+        font-size: 1rem;
 
-        @media (max-width: 760px) {
+        @media (max-width: 770px) {
           text-align: right;
+          font-size: .7rem;
         }
       }
     }
