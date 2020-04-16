@@ -12,11 +12,11 @@
               <use href="#twitter"></use>
             </svg>
           </a>
-          <a href="https://gitlab.com/mecolela/the-room" rel="noreferrer" target="_blank" class="social">
+          <a href="https://gitlab.com/mecolela" rel="noreferrer" target="_blank" class="social">
             <svg>
               <use href="#gitlab"></use>
             </svg>
-          </a><a href="https://github.com/sichangi/the-room" rel="noreferrer" target="_blank" class="social">
+          </a><a href="https://github.com/sichangi" rel="noreferrer" target="_blank" class="social">
           <svg>
             <use href="#github"></use>
           </svg>
